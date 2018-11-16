@@ -5,7 +5,9 @@ Steps for Setting Up the Project
 2. Install and Save React and ReactDOM packages
 -- meteor npm install --save react react-dom
 3. Set up Bootstrap
+-- meteor add twbs:bootstrap
 -- meteor npm install --save bootstrap
+** not sure which one actually worked lol **
 4. Should be all set!
 
 Possible Issues:
