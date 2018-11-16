@@ -1,13 +1,4 @@
-import React from 'react';
-import { Template } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
-import { Meteor } from 'meteor/meteor';
-import { render } from 'react-dom';
-
-import App from '../imports/ui/App.js';
-import "../imports/api/collections.js";
-import './main.html';
-
-Meteor.startup(() => {
-	render(<App />, document.getElementById('render-target'));
-});
+import '../imports/ui/body.js';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';

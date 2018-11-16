@@ -1,0 +1,100 @@
+<body>
+	<div id="container">
+	{{#if loginPage }}
+		<h2>Craigslist</h2>
+		<div class="forms">
+			<h3>Login</h3>
+			<form class="login">
+				<label>Username</label>
+				<input type="text" class="form-control" id="loginUsername" placeholder="" />
+				<label>Password</label>
+				<input type="text" class="form-control" id="loginPassword" placeholder="" />
+				<br/>
+				<input type="submit" class="btn btn-primary" value="Submit" />
+				<br/>
+			</form>
+		</div>
+		<p id="loginErrorMessage"></p>
+		<br/>
+		<div class="forms">
+			<h3>Create Account</h3>
+			<form class="createAccount">
+				<label>Username</label>
+				<input type="text" class="form-control" id="createUsername" placeholder="" />
+				<label>Password</label>
+				<input type="text" class="form-control" id="createPassword" placeholder="" />
+				<label>Confirm Password</label>
+				<input type="text" class="form-control" id="createConfirmPassword" placeholder="" />
+				<label>Email</label>
+				<input type="text" class="form-control" id="createEmail" placeholder="" />
+				<br/>
+				<input type="submit" class="btn btn-primary" value="Submit" />
+			</form>
+		</div>
+		<p id="createAccountErrorMessage"></p>
+	{{ else }}
+		<header class="header">
+			<center>
+				<button class="buyButton btn btn-primary">Buy</button>
+				<button class="sellButton btn btn-primary">Sell</button>
+				<button class="profileButton btn btn-primary">Profile</button>
+			</center>	
+		</header>
+		{{#if buyPage }}
+			<h1>Buy Page</h1>
+			<form class="findBook forms">
+				<input type="text" ref="searchedTitle" class="form-control" placeholder="i.e. Introduction to Linear Algebra" />
+				<input type="radio" id="titleChoice"
+			     name="title" value="title">
+			    <label for="titleChoice">Title</label>
+			    <input type="radio" id="isbnChoice"
+			     name="isbn" value="isbn">
+			    <label for="isbnChoice">ISBN</label>
+			    <input type="radio" id="classChoice"
+			     name="class" value="class">
+			    <label for="classChoice">Class</label>
+			    <br/>
+				<input type="submit" class="btn btn-primary" value="Submit"/>
+			</form>
+			<ul>
+	        	{{#each books}}
+	        		{{> book}}
+	        	{{/each}}
+	        </ul>
+		{{else if sellPage }}
+			<div className="container">
+	          <h1>Sell Your Book</h1>
+	          <form class="newBook forms" >
+	          		<label>Book Title</label>
+	          		<input type="text" class="form-control" id="bookTitle" placeholder="i.e. Introduction to Linear Algebra" />
+	          		<br/>
+	            	<label>Book ISBN</label>
+	            	<input type="text" class="form-control" id="bookIsbn" placeholder="i.e. 1234-5678-9101" />
+	            	<br/>
+	            	<label>Book Class</label>
+	            	<input type="text" class="form-control" id="bookClass" placeholder="i.e. EECS 183" />
+	            	<br/>
+	            	<label>Book Price</label>
+	            	<input type="text" class="form-control" id="bookPrice" placeholder="i.e. 17.99"/>
+	            	<br/>
+	            	<input type="submit" class="btn btn-primary" value="Submit" />
+	          </form>
+	          <h3>Your Books</h3>
+		      <ul>
+		       	{{#each books}}
+		        	{{> book}}
+		        {{/each}}
+		      </ul>
+		    </div>
+		{{else }}
+			<h1>Profile Page</h1>
+			<ul>
+		       	{{#each mybooks}}
+		        	{{> book}}
+		        {{/each}}
+		      </ul>
+		{{ /if }}
+	{{ /if }}
+	</div>
+</body>
+
