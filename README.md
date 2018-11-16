@@ -6,13 +6,18 @@
 -- meteor npm install --save react react-dom
 ### 3. Set up Bootstrap
 -- meteor add twbs:bootstrap
+
 -- meteor npm install --save bootstrap
+
 ** not sure which one actually worked lol **
+
 ### 4. Should be all set!
 
 ## Possible Issues:
 -- Two packages Meteor/templating and static-html want to render ".html" files
+
 -- Solution: meteor remove templating
+
 -----> removes templating package from repo
 
 ## To Do:
