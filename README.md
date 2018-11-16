@@ -36,3 +36,6 @@
 ## Questions:
 1. Are we going to use profile pictures and pictures to show for each book?
 2. How are we going to store the images?
+
+## Resources:
+Hold Images in Cloudinary: https://ics-software-engineering.github.io/meteor-example-cloudinary/
