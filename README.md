@@ -17,10 +17,15 @@
 
 ## To Do:
 -- Hide Password characters in login and create account fields
+
 -- add user rating
+
 -- filter searches based on radio button checked
+
 -- create application name
+
 -- add profile picture
+
 -- add math to determine user rating
 
 ## Questions:
