@@ -9,6 +9,7 @@ Template.body.onCreated(function() {
   this.buyPage = new ReactiveVar( false );
   this.sellPage = new ReactiveVar( false );  
   this.user = new ReactiveVar("");
+  this.buyPageSearch = new ReactiveVar("");
 });
 Template.body.helpers({
   loginPage: function() {
@@ -25,7 +26,19 @@ Template.body.helpers({
   },
   mybooks: function(){
     return Books.find({ username: Template.instance().user.get() }).fetch();
-  }
+  },
+  buyPageBooks: function(){
+    if(Template.instance().buyPageSearch.get() == ""){
+      return Books.find({}).fetch();
+    } else {
+      return Books.find({ 
+          "$or" : [{ "title" : Template.instance().buyPageSearch.get() },
+                  { "isbn" : Template.instance().buyPageSearch.get() },
+                  { "classChoice" : Template.instance().buyPageSearch.get() }
+                  ]
+          });
+    }
+  },
 });
 Template.body.events({
   'submit .login'(event, template) {
@@ -99,18 +112,14 @@ Template.body.events({
     document.getElementById('bookClass').value = '';
     document.getElementById('bookPrice').value = '';
   },
-  'submit .newBook' (event, template){
+  'submit .findBook' (event, template){
     event.preventDefault();
 
-    // Retrieve values from the radio fields
-    if(document.getElementById('titleChoice').val()){
+    console.log(document.getElementById('buyPageSearchText').value);
 
-    } else if(document.getElementById('isbnChoice').val()){
+    template.buyPageSearch.set(document.getElementById('buyPageSearchText').value);
 
-    } else if(document.getElementById('classChoice').val()){
-
-    }
-
+    document.getElementById('buyPageSearchText').value = "";
   },
   'click .buyButton' (event, template){
       template.buyPage.set(true);

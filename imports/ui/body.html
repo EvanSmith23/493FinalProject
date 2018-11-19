@@ -43,21 +43,12 @@
 		{{#if buyPage }}
 			<h1>Buy Page</h1>
 			<form class="findBook forms">
-				<input type="text" ref="searchedTitle" class="form-control" placeholder="i.e. Introduction to Linear Algebra" />
-				<input type="radio" id="titleChoice"
-			     name="title" value="title">
-			    <label for="titleChoice">Title</label>
-			    <input type="radio" id="isbnChoice"
-			     name="isbn" value="isbn">
-			    <label for="isbnChoice">ISBN</label>
-			    <input type="radio" id="classChoice"
-			     name="class" value="class">
-			    <label for="classChoice">Class</label>
+				<input type="text" id="buyPageSearchText" class="form-control" placeholder="i.e. Introduction to Linear Algebra" />
 			    <br/>
 				<input type="submit" class="btn btn-primary" value="Submit"/>
 			</form>
 			<ul>
-	        	{{#each books}}
+	        	{{#each buyPageBooks}}
 	        		{{> book}}
 	        	{{/each}}
 	        </ul>
@@ -79,14 +70,14 @@
 	            	<br/>
 	            	<input type="submit" class="btn btn-primary" value="Submit" />
 	          </form>
-	          <h3>Your Books</h3>
+	          <h3>Books</h3>
 		      <ul>
 		       	{{#each books}}
 		        	{{> book}}
 		        {{/each}}
 		      </ul>
 		    </div>
-		{{else }}
+		{{ else }}
 			<h1>Profile Page</h1>
 			<ul>
 		       	{{#each mybooks}}
