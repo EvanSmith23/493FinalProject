@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating';
+import { Email } from 'meteor/email';
 import { Books } from '../api/collections.js';
 import { Users } from '../api/collections.js';
 import './body.html';
@@ -115,11 +116,29 @@ Template.body.events({
   'submit .findBook' (event, template){
     event.preventDefault();
 
-    console.log(document.getElementById('buyPageSearchText').value);
-
     template.buyPageSearch.set(document.getElementById('buyPageSearchText').value);
-
     document.getElementById('buyPageSearchText').value = "";
+  },
+  'click .contactSeller' (event, template){
+    const sellingUser = event.target.childNodes[1].data;
+
+    var sellerResults = Users.find({ "username" : sellingUser }).fetch();
+    var sellerEmail = sellerResults[0].email;
+
+    var buyerResults = Users.find({ "username" : Template.instance().user.get() }).fetch();
+    var buyerEmail = buyerResults[0].email
+
+    var subject = 'Contacting to Purchase Book';
+    var body = 'Looking to buy a book!';
+
+    Meteor.call('sendEmail', sellerEmail, buyerEmail, subject, body, function(error, result){
+      if (error) {
+        console.log(error);
+      }
+      else {
+        console.log(result);
+      }
+    });
   },
   'click .buyButton' (event, template){
       template.buyPage.set(true);

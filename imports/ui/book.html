@@ -1,8 +1,11 @@
 <template name="book">
-	<li class="bookForSale">
-	    <p id="bookName" className="bookAttr">Title: {{ title }}</p>
-	    <p id="bookIsbn" className="bookAttr">ISBN: {{ isbn }}</p>
-	    <p id="bookClass" className="bookAttr">Class: {{ className }}</p>
-	    <p id="bookPrice" className="bookAttr">Price: ${{ price }}</p>
-	</li>
+	<div class="bookForSale">
+		<li>
+		    <p id="bookName" className="bookAttr">Title: {{ title }}</p>
+		    <p id="bookIsbn" className="bookAttr">ISBN: {{ isbn }}</p>
+		    <p id="bookClass" className="bookAttr">Class: {{ className }}</p>
+		    <p id="bookPrice" className="bookAttr">Price: ${{ price }}</p>
+		</li>
+		<button class="contactSeller btn btn-primary">Contact {{ username }}</button>
+	</div>
 </template>
