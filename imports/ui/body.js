@@ -110,18 +110,15 @@ Template.body.events({
     }
 
     var bookList = Books.find({ "username" : accountOwner }).fetch();
-    console.log(bookList);
     var count;
     var bookListLen = bookList.length;
     for(count = 0; count < bookListLen; count++) {
       var bookId = bookList[count]._id;
-      console.log(bookId);
       Books.update({_id : bookId},{$set:{username: newUsername}});
     }
     bookList = Books.find({ "username" : newUsername }).fetch();
-    console.log(bookList);
 
-    // TODO REMOVE DELETE BUTTON
+    // TODO REMOVE DELETE BUTTON ON BUY PAGE
 
   },
   'submit .createAccount'(event, template) {
@@ -185,7 +182,6 @@ Template.body.events({
     document.getElementById('buyPageSearchText').value = "";
   },
   'click .contactSeller' (event, template){
-    console.log(event.target.childNodes);
     const sellingUser = event.target.childNodes[1].data;
 
     var sellerResults = Users.find({ "username" : sellingUser }).fetch();
