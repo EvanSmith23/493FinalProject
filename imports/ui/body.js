@@ -191,7 +191,7 @@ Template.body.events({
     var buyerEmail = buyerResults[0].email
 
     var subject = 'Contacting to Purchase Book';
-    var body = 'Looking to buy a book!';
+    var body = 'Looking to buy a book! Please contact me at ' + buyerEmail;
 
     Meteor.call('sendEmail', sellerEmail, buyerEmail, subject, body, function(error, result){
       if (error) {
