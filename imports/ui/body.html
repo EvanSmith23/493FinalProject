@@ -1,7 +1,7 @@
 <body>
 	<div id="container">
 	{{#if loginPage }}
-		<h2>Craigslist</h2>
+		<h2>BuySellBooks.com</h2>
 		<div class="forms">
 			<h3>Login</h3>
 			<form class="login">
@@ -38,12 +38,13 @@
 				<button class="buyButton btn btn-primary">Buy</button>
 				<button class="sellButton btn btn-primary">Sell</button>
 				<button class="profileButton btn btn-primary">Profile</button>
+				<button class="logoutButton btn btn-primary">Logout</button>
 			</center>	
 		</header>
 		{{#if buyPage }}
 			<h1>Buy Page</h1>
 			<form class="findBook forms">
-				<input type="text" id="buyPageSearchText" class="form-control" placeholder="i.e. Introduction to Linear Algebra" />
+				<input type="text" id="buyPageSearchText" class="form-control" placeholder="Search by Title, Author or Class" />
 			    <br/>
 				<input type="submit" class="btn btn-primary" value="Submit"/>
 			</form>
@@ -68,17 +69,31 @@
 	            	<label>Book Price</label>
 	            	<input type="text" class="form-control" id="bookPrice" placeholder="i.e. 17.99"/>
 	            	<br/>
+	            	<label>Book Condition</label>
+	            	<input type="text" class="form-control" id="bookCondition" placeholder="i.e. 1-5"/>
+	            	<br/>
+	            	<label>Book Description</label>
+	            	<input type="text" class="form-control" id="bookDescription" placeholder="Optional Description"/>
+	            	<br/>
 	            	<input type="submit" class="btn btn-primary" value="Submit" />
 	          </form>
+	          <!-- REMOVING, POSS NOT NECESSARY
 	          <h3>Books</h3>
 		      <ul>
 		       	{{#each books}}
 		        	{{> book}}
 		        {{/each}}
-		      </ul>
+		      </ul> -->
 		    </div>
 		{{ else }}
 			<h1>Profile Page</h1>
+			<h3>Update Account Info</h3>
+			<ul>
+		       	{{#each myAccount}}
+		        	{{> account}}
+		        {{/each}}
+		    </ul>
+		    <h3>My Books</h3>
 			<ul>
 		       	{{#each mybooks}}
 		        	{{> book}}

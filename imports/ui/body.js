@@ -4,6 +4,7 @@ import { Books } from '../api/collections.js';
 import { Users } from '../api/collections.js';
 import './body.html';
 import './book.html';
+import './account.html'
 
 Template.body.onCreated(function() {
   this.loginPage = new ReactiveVar( true );
@@ -27,6 +28,9 @@ Template.body.helpers({
   },
   mybooks: function(){
     return Books.find({ username: Template.instance().user.get() }).fetch();
+  },
+  myAccount: function(){
+    return Users.find({ username: Template.instance().user.get() }).fetch();
   },
   buyPageBooks: function(){
     if(Template.instance().buyPageSearch.get() == ""){
@@ -67,6 +71,59 @@ Template.body.events({
     document.getElementById('loginUsername').value = '';
     document.getElementById('loginPassword').value = '';
   },
+  'submit .updateInfo'(event, template) {
+    event.preventDefault();
+
+    const accountOwner = Template.instance().user.get();
+
+    var userResults = Users.find({ "username" : accountOwner }).fetch();
+    var userId = userResults[0]._id;
+
+    var newUsername = document.getElementById('usernameUpdate').value;
+    var newEmail = document.getElementById('emailUpdate').value;
+    var newPassword = document.getElementById('newPassword1').value;
+    var confirmPassword = document.getElementById('confirmNewPassword').value;
+
+    if (newPassword != confirmPassword) {
+      alert("New password much match confirm password");
+      return
+    }
+
+    if (newUsername == "") {
+      newUsername = userResults[0].username;
+    }
+
+    if (newEmail == "") {
+      newEmail = userResults[0].email;
+    }
+
+    if (newPassword == "") {
+      Users.update({_id : userId},{$set:{username: newUsername, email: newEmail}});
+      template.user.set(newUsername);
+      alert("Your username is now: " + newUsername + " and your e-mail is now: " + newEmail + ".");
+    }
+    else {
+      Users.update({_id : userId},{$set:{username: newUsername, email: newEmail, password: newPassword}});
+      template.user.set(newUsername);
+      alert("Password successfully updated.");
+      alert("Your username is now: " + newUsername + " and your e-mail is now: " + newEmail + ".");
+    }
+
+    var bookList = Books.find({ "username" : accountOwner }).fetch();
+    console.log(bookList);
+    var count;
+    var bookListLen = bookList.length;
+    for(count = 0; count < bookListLen; count++) {
+      var bookId = bookList[count]._id;
+      console.log(bookId);
+      Books.update({_id : bookId},{$set:{username: newUsername}});
+    }
+    bookList = Books.find({ "username" : newUsername }).fetch();
+    console.log(bookList);
+
+    // TODO REMOVE DELETE BUTTON
+
+  },
   'submit .createAccount'(event, template) {
     // Prevent default browser form submit
     event.preventDefault();
@@ -103,15 +160,23 @@ Template.body.events({
     const bookIsbn = document.getElementById('bookIsbn').value;
     const bookClass = document.getElementById('bookClass').value;
     const bookPrice = document.getElementById('bookPrice').value;
+    const bookCondition = document.getElementById('bookCondition').value;
+    var bookDescription = document.getElementById('bookDescription').value;
+
+    if (bookDescription == "") {
+      bookDescription = "No description provided.";
+    }
 
     // Insert into Books Collection
-    Books.insert({ title: bookTitle, isbn: bookIsbn, className: bookClass, price: bookPrice, username: Template.instance().user.get(),createdAt: new Date() });
+    Books.insert({ title: bookTitle, isbn: bookIsbn, className: bookClass, price: bookPrice, condition: bookCondition, description: bookDescription, username: Template.instance().user.get(),createdAt: new Date() });
 
     // Reset values from the text fields
     document.getElementById('bookTitle').value = '';
     document.getElementById('bookIsbn').value = '';
     document.getElementById('bookClass').value = '';
     document.getElementById('bookPrice').value = '';
+    document.getElementById('bookCondition').value = '';
+    document.getElementById('bookDescription').value = '';
   },
   'submit .findBook' (event, template){
     event.preventDefault();
@@ -120,6 +185,7 @@ Template.body.events({
     document.getElementById('buyPageSearchText').value = "";
   },
   'click .contactSeller' (event, template){
+    console.log(event.target.childNodes);
     const sellingUser = event.target.childNodes[1].data;
 
     var sellerResults = Users.find({ "username" : sellingUser }).fetch();
@@ -140,6 +206,18 @@ Template.body.events({
       }
     });
   },
+  'click .deleteBookBtn' (event, template){
+    var bookID = this._id;
+    var bookOwner = this.username;
+    if (bookOwner != Template.instance().user.get()) {
+      alert("Cannot delete a book that you don't own!");
+      return;
+    }
+    else {
+      Books.remove(this._id);
+      alert("Book successfully deleted.")
+    }
+  },
   'click .buyButton' (event, template){
       template.buyPage.set(true);
       template.sellPage.set(false);
@@ -151,5 +229,11 @@ Template.body.events({
   'click .profileButton' (event, template){
       template.buyPage.set(false);
       template.sellPage.set(false);
+  },
+  'click .logoutButton' (event, template) {
+      template.loginPage.set(true);
+      template.buyPage.set(false);
+      template.sellPage.set(false);
+      template.user.set("");
   },
 });

@@ -5,7 +5,12 @@
 		    <p id="bookIsbn" className="bookAttr">ISBN: {{ isbn }}</p>
 		    <p id="bookClass" className="bookAttr">Class: {{ className }}</p>
 		    <p id="bookPrice" className="bookAttr">Price: ${{ price }}</p>
+		    <p id="bookCondition" className="bookAttr">Condition: {{ condition }}</p>
+	    	<p id="bookDescription" className="bookAttr">Description: {{ description }}</p>
 		</li>
-		<button class="contactSeller btn btn-primary">Contact {{ username }}</button>
+		<button class="contactSeller btn btn-primary">Contact {{ username }}
+		</button>
+		<button class="deleteBookBtn btn btn-primary">Delete Book
+		</button>
 	</div>
 </template>
